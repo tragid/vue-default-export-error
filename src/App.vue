@@ -1,5 +1,29 @@
+<script setup lang="ts">
+import {
+  computed,
+  ref,
+} from 'vue';
+import TestComponent from '@/components/TestComponent/TestComponent.vue';
+import { TestComponentProps } from '@/components/TestComponent/types';
+import { Tag } from '@/components/TestComponent/enums';
+
+const msg = ref('Hello World!');
+
+const componentProps = computed<TestComponentProps>(() => ({
+  msg: msg.value,
+  tag: Tag.SPAN,
+}));
+
+function onClick(): void {
+  alert('clicked');
+}
+</script>
+
 <template>
-  <TestComponent msg="Hello World!" />
+  <TestComponent
+    v-bind="componentProps"
+    @click="onClick"
+  />
 </template>
 
 <style>
@@ -24,6 +48,3 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
-<script setup lang="ts">
-import TestComponent from '@/components/TestComponent/TestComponent.vue';
-</script>
