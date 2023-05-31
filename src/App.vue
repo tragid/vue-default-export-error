@@ -1,29 +1,49 @@
 <script setup lang="ts">
 import {
-  computed,
   ref,
 } from 'vue';
-import TestComponent from '@/components/TestComponent/TestComponent.vue';
-import { TestComponentProps } from '@/components/TestComponent/types';
-import { Tag } from '@/components/TestComponent/enums';
+import ProblemComponent from '@/components/TestComponent/ProblemComponent.vue';
 
-const msg = ref('Hello World!');
+const events = ref<string[]>([]);
 
-const componentProps = computed<TestComponentProps>(() => ({
-  msg: msg.value,
-  tag: Tag.SPAN,
-}));
+function onInput(value: string): void {
+  events.value.push(value);
+}
 
-function onClick(): void {
-  alert('clicked');
+function onChange(value: string): void {
+  events.value.push(value);
+}
+
+function onBlur(value: string): void {
+  events.value.push(value);
+}
+
+function onFocus(value: string): void {
+  events.value.push(value);
 }
 </script>
 
 <template>
-  <TestComponent
-    v-bind="componentProps"
-    @click="onClick"
-  />
+  <div>
+    <h3>Problem: ComponentEmits extends BaseEmits (runtime exceptions on extended events)</h3>
+    <ProblemComponent
+      @input-event="onInput"
+      @blur-event="onBlur"
+      @focus-event="onFocus"
+      @change-event="onChange"
+    />
+    <br />
+    Events:
+    <ul>
+      <li
+        v-for="(event, index) in events"
+        :key="index"
+      >
+        {{ event }}
+      </li>
+    </ul>
+  </div>
+  <hr />
 </template>
 
 <style>
@@ -33,18 +53,5 @@ function onClick(): void {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>

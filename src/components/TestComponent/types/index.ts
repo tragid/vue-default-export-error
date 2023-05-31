@@ -1,2 +1,4 @@
-export { default as TestComponentProps } from './TestComponentProps';
-export { default as TestComponentEmits } from './TestComponentEmits';
+export interface BaseEmits {
+  (e: 'input-event', value: string): void;
+  (e: 'change-event', value: string): void;
+}
